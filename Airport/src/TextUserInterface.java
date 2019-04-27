@@ -3,12 +3,12 @@ import java.util.*;
 public class TextUserInterface {
 
 	private Scanner reader = new Scanner(System.in); 
-	private Aeroplane airplane;
 	private String input; 
-	private Airport boeing = new Airport();;
+	private Airport airport;
 	
 	public TextUserInterface() {
 		
+		this.airport = new Airport();
 	}
 	
 	public void start() {
@@ -34,7 +34,7 @@ public class TextUserInterface {
 				
 			}else {
 				
-				System.out.println("Fuck you , please enter again");
+				System.out.println("Not recoganized , please enter again");
 			}
 		}
 		
@@ -94,63 +94,50 @@ public class TextUserInterface {
 	
 	public void addPlane() {
 		
-		this.airplane = new Aeroplane();
 		System.out.println("Give plane ID");
 		String userInput = this.reader.nextLine();
-		int userInput1 = convertStringInt(userInput);
-		this.airplane.setId(userInput);
 		System.out.println("Give plane capacity");
 		String capacity = this.reader.nextLine();
-		this.airplane.setCapacity(capacity);
-		this.airplane.addPlane();
-		this.boeing.addPlaneList(this.airplane);
-		
+		int userInput2 = convertStringInt(capacity);
+		this.airport.createAirplane(userInput,userInput2);
 	}
 	
 	public void addFlight() {
 		
-		this.airplane = new Aeroplane();
 		System.out.println("Give plane ID");
 		String userInput = this.reader.nextLine();
-		this.airplane.setId(userInput);
 		System.out.println("Give departure airport code");
 		String userInput1 = this.reader.nextLine();
-		this.airplane.setDeparture(userInput1);
 		System.out.println("Give arrival airport code");
 		String userInput2 = this.reader.nextLine();
-		this.airplane.setArrAirport(userInput2);
-		this.airplane.addPlane();
-		this.boeing.addPlaneList(this.airplane);
+		this.airport.addFlight(userInput,userInput1,userInput2);
 	}
 	
 	public void printPlanes() {
 		
-		this.boeing.printPlanes();
+		this.airport.printPlanes();
 	}
 	
 	public void printFlights() {
 		
-		this.boeing.printFlights();
+		this.airport.printFlights();
 	}
 	
 	public void printPlaneInfo() {
 		
 		System.out.println("Enter the plane iD ");
 		String iD = this.reader.nextLine();
-		String capacity = this.airplane.getPlaneInfo(iD);
-		
-		System.out.println("Aeroplane information : " + iD + " with capacity " + capacity);
+		Aeroplane targetAirplane = this.airport.getPlanebyId(iD);
+		System.out.println(targetAirplane);
 	}
 	
 	public int convertStringInt(String a) {
 		
 		try {
-			
 			int convert = Integer.parseInt(a);
 			return convert;
 			
 		}catch (Exception e){
-			
 			return 50;
 		}
 	}

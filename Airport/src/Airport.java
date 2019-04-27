@@ -2,31 +2,49 @@ import java.util.*;
 
 public class Airport {
 	
-	private ArrayList<Aeroplane> list = new ArrayList<Aeroplane>();
+	private HashMap<String,Aeroplane> aeroList;
+	private ArrayList<Flights> flightList;
 	
 	public Airport() {
 		
+		this.flightList = new ArrayList<>();
+		this.aeroList = new HashMap<>();
 	}
 	
-	public ArrayList<Aeroplane> addPlaneList(Aeroplane plane){
+	public void createAirplane(String iD, int capacity) {
 		
-		list.add(plane);
-		return list;
+		Aeroplane airplane = new Aeroplane();
+		airplane.setId(iD);
+		airplane.setCapacity(capacity);
+		aeroList.put(iD,airplane);
+	}
+	
+	public void addFlight(String iD,String depAirport,String arrAirport) {
+		
+		Aeroplane newPlane = getPlanebyId(iD);
+		Flights newFlight = new Flights(newPlane,depAirport,arrAirport);
+		flightList.add(newFlight);
+		newPlane.addFlight(newFlight);
+	}
+	
+	public Aeroplane getPlanebyId(String iD) {
+		
+		return this.aeroList.get(iD);
 	}
 	
 	public void printPlanes() {
 		
-		for (Aeroplane a : list) {
+		for (String key : aeroList.keySet()) {
 			
-			System.out.println(a);
+			System.out.println("The id " + key + " is associated with " + aeroList.get(key) + " capacity" );
 		}
 	}
 	
 	public void printFlights() {
 		
-		for (Aeroplane a : list) {
+		for (Flights f : flightList) {
 			
-			System.out.println(a);
+			System.out.println(f);
 		}
 	}
 }
